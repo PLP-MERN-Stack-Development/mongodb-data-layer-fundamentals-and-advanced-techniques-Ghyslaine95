@@ -1,59 +1,113 @@
-# MongoDB Fundamentals - Week 1
+# PLP Bookstore MongoDB Project
+
+This project demonstrates fundamental MongoDB operations including CRUD, aggregation pipelines, and indexing.
 
 ## Setup Instructions
 
-Before you begin this assignment, please make sure you have the following installed:
+### Option 1: MongoDB Atlas (Cloud)
+1. Create a free account at [MongoDB Atlas](https://www.mongodb.com/atlas)
+2. Create a new cluster
+3. Get your connection string
+4. Update the connection details in the scripts
 
-1. **MongoDB Community Edition** - [Installation Guide](https://www.mongodb.com/docs/manual/administration/install-community/)
-2. **MongoDB Shell (mongosh)** - This is included with MongoDB Community Edition
-3. **Node.js** - [Download here](https://nodejs.org/)
+### Option 2: Local MongoDB Installation
+1. Download and install MongoDB Community Edition
+2. Start the MongoDB service
+3. Use default connection: `mongodb://localhost:27017`
 
-### Node.js Package Setup
+## Running the Scripts
 
-Once you have Node.js installed, run the following commands in your assignment directory:
+### 1. Insert Sample Data
 
-```bash
-# Initialize a package.json file
-npm init -y
 
-# Install the MongoDB Node.js driver
-npm install mongodb
-```
+# using MongoDB Compass
+# Open Compass, connect to your database, and run the script
 
-## Assignment Overview
+Project Structure
+insert_books.js - Script to populate the database with sample book data
 
-This week focuses on MongoDB fundamentals including:
-- Creating and connecting to MongoDB databases
-- CRUD operations (Create, Read, Update, Delete)
-- MongoDB queries and filters
-- Aggregation pipelines
-- Indexing for performance
+queries.js - Contains all MongoDB queries for the assignment
 
-## Submission
+README.md - This file with instructions
 
-Complete all the exercises in this assignment and push your code to GitHub using the provided GitHub Classroom link.
+Database Structure
+Database: plp_bookstore
+Collection: books
 
-## Getting Started
+Each book document has:
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Install MongoDB locally or set up a MongoDB Atlas account
-4. Run the provided `insert_books.js` script to populate your database
-5. Complete the tasks in the assignment document
+title (string)
 
-## Files Included
+author (string)
 
-- `Week1-Assignment.md`: Detailed assignment instructions
-- `insert_books.js`: Script to populate your MongoDB database with sample book data
+genre (string)
 
-## Requirements
+published_year (number)
 
-- Node.js (v18 or higher)
-- MongoDB (local installation or Atlas account)
-- MongoDB Shell (mongosh) or MongoDB Compass
+price (number)
 
-## Resources
+in_stock (boolean)
 
-- [MongoDB Documentation](https://docs.mongodb.com/)
-- [MongoDB University](https://university.mongodb.com/)
-- [MongoDB Node.js Driver](https://mongodb.github.io/node-mongodb-native/) 
+pages (number)
+
+publisher (string)
+
+Queries Included
+Basic CRUD
+Find by genre, year, author
+
+Update prices
+
+Delete documents
+
+Advanced Queries
+Complex filters with projection
+
+Sorting and pagination
+
+Aggregation Pipelines
+Average price by genre
+
+Most prolific author
+
+Books by publication decade
+
+Indexing
+Single field and compound indexes
+
+Performance analysis with explain()
+
+Verification
+After running the scripts, verify your data in MongoDB Compass 
+
+
+## How to Run Your Project
+
+1. **Set up MongoDB** (choose one):
+   - MongoDB Atlas (cloud - recommended)
+   - Local MongoDB installation
+
+2. **Run the insertion script**:
+   ```bash
+  
+   #  Atlas:
+   # mongosh "mongodb+srv://username:password@cluster.mongodb.net/" insert_books.js
+Execute the queries:
+
+bash
+mongosh "your-connection-string" queries.js
+Verify results in MongoDB Compass or through the shell.
+
+Expected Output Screenshots
+Take screenshots of:
+
+MongoDB Compass/Atlas showing your books collection
+
+Sample query results
+
+The output of explain() showing index usage
+
+Aggregation pipeline results
+
+This comprehensive solution covers all MongoDB fundamentals required for the assignment and provides a solid foundation for working with MongoDB in real-world applications!
+

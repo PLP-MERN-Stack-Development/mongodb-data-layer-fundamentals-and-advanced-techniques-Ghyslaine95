@@ -10,7 +10,7 @@ const uri = 'mongodb://localhost:27017';
 const dbName = 'plp_bookstore';
 const collectionName = 'books';
 
-// Sample book data
+// Sample book data - Updated with recent books
 const books = [
   {
     title: 'To Kill a Mockingbird',
@@ -113,24 +113,104 @@ const books = [
     publisher: 'HarperOne'
   },
   {
-    title: 'Moby Dick',
-    author: 'Herman Melville',
-    genre: 'Adventure',
-    published_year: 1851,
-    price: 12.50,
-    in_stock: false,
-    pages: 635,
-    publisher: 'Harper & Brothers'
+    title: 'The Hunger Games',
+    author: 'Suzanne Collins',
+    genre: 'Dystopian',
+    published_year: 2008,
+    price: 13.99,
+    in_stock: true,
+    pages: 374,
+    publisher: 'Scholastic'
   },
   {
-    title: 'Wuthering Heights',
-    author: 'Emily Brontë',
-    genre: 'Gothic Fiction',
-    published_year: 1847,
-    price: 9.99,
+    title: 'The Martian',
+    author: 'Andy Weir',
+    genre: 'Science Fiction',
+    published_year: 2011,
+    price: 15.99,
     in_stock: true,
-    pages: 342,
-    publisher: 'Thomas Cautley Newby'
+    pages: 369,
+    publisher: 'Crown'
+  },
+  {
+    title: 'A Game of Thrones',
+    author: 'George R. R. Martin',
+    genre: 'Fantasy',
+    published_year: 1996,
+    price: 18.99,
+    in_stock: true,
+    pages: 694,
+    publisher: 'Bantam Books'
+  },
+  {
+    title: 'The Night Circus',
+    author: 'Erin Morgenstern',
+    genre: 'Fantasy',
+    published_year: 2011,
+    price: 14.99,
+    in_stock: false,
+    pages: 387,
+    publisher: 'Doubleday'
+  },
+  {
+    title: 'Gone Girl',
+    author: 'Gillian Flynn',
+    genre: 'Mystery',
+    published_year: 2012,
+    price: 16.99,
+    in_stock: true,
+    pages: 432,
+    publisher: 'Crown'
+  },
+  {
+    title: 'The Goldfinch',
+    author: 'Donna Tartt',
+    genre: 'Fiction',
+    published_year: 2013,
+    price: 17.99,
+    in_stock: true,
+    pages: 771,
+    publisher: 'Little, Brown and Company'
+  },
+  {
+    title: 'The Girl on the Train',
+    author: 'Paula Hawkins',
+    genre: 'Thriller',
+    published_year: 2015,
+    price: 15.50,
+    in_stock: true,
+    pages: 336,
+    publisher: 'Riverhead Books'
+  },
+  {
+    title: 'Educated',
+    author: 'Tara Westover',
+    genre: 'Memoir',
+    published_year: 2018,
+    price: 14.99,
+    in_stock: true,
+    pages: 334,
+    publisher: 'Random House'
+  },
+  {
+    title: 'Where the Crawdads Sing',
+    author: 'Delia Owens',
+    genre: 'Mystery',
+    published_year: 2018,
+    price: 16.99,
+    in_stock: false,
+    pages: 368,
+    publisher: 'G.P. Putnam\'s Sons'
+  },
+  {
+    title: 'Project Hail Mary',
+    author: 'Andy Weir',
+    genre: 'Science Fiction',
+    published_year: 2021,
+    price: 19.99,
+    in_stock: true,
+    pages: 476,
+    publisher: 'Ballantine Books'
   }
 ];
 
@@ -161,9 +241,27 @@ async function insertBooks() {
 
     // Display the inserted books
     console.log('\nInserted books:');
-    const insertedBooks = await collection.find({}).toArray();
+    const insertedBooks = await collection.find({}).sort({ published_year: -1 }).toArray();
     insertedBooks.forEach((book, index) => {
-      console.log(`${index + 1}. "${book.title}" by ${book.author} (${book.published_year})`);
+      console.log(`${index + 1}. "${book.title}" by ${book.author} (${book.published_year}) - $${book.price}`);
+    });
+
+    // Test the specific query from the assignment
+    console.log('\n--- Testing Assignment Query ---');
+    console.log('Books in stock published after 2010:');
+    const testResults = await collection.find({
+      in_stock: true,
+      published_year: { $gt: 2010 }
+    }).project({
+      title: 1,
+      author: 1,
+      published_year: 1,
+      price: 1,
+      _id: 0
+    }).toArray();
+    
+    testResults.forEach((book, index) => {
+      console.log(`${index + 1}. "${book.title}" by ${book.author} (${book.published_year}) - $${book.price}`);
     });
 
   } catch (err) {
@@ -187,12 +285,18 @@ insertBooks().catch(console.error);
  * 2. Find books by a specific author:
  *    db.books.find({ author: "George Orwell" })
  *
- * 3. Find books published after 1950:
- *    db.books.find({ published_year: { $gt: 1950 } })
+ * 3. Find books published after 2010:
+ *    db.books.find({ published_year: { $gt: 2010 } })
  *
  * 4. Find books in a specific genre:
  *    db.books.find({ genre: "Fiction" })
  *
  * 5. Find in-stock books:
  *    db.books.find({ in_stock: true })
- */ 
+ *
+ * 6. Assignment query - books in stock published after 2010:
+ *    db.books.find({ 
+ *      in_stock: true, 
+ *      published_year: { $gt: 2010 } 
+ *    })
+ */
